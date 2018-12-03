@@ -7,7 +7,7 @@
   <body>
     <h1>Edit User: </h1>
     <h1>Form goes here</h1>
-      <form action="/edit/<%= duck._id %>" method="post">
+      <form action="/edits/<%= duck._id %>" method="post">
           <p>Name: <input type="text" name="name"></p>
           <p>
               Gender:
@@ -21,5 +21,6 @@
           <p>Favorite pond: <input type="text" name="favpond"></p>
           <input type="submit" value="Create a duck">
       </form>
+      <a href="/delete/<%= duck._id %>">delete</a>
   </body>
 </html>

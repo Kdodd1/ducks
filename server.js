@@ -10,6 +10,7 @@ app.use(express.static(path.join(__dirname, './static')));
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 mongoose.connect('mongodb://localhost/ducks');
+mongoose.Promise = global.Promise;
 
 var DuckSchema = new mongoose.Schema({
     name: String,
@@ -31,25 +32,12 @@ app.get("/edit/:_id", function(req, res){
   console.log(duck);
   })
 
-app.post("/edit/:_id", function(req, res){
+app.post("/edits/:_id", function(req, res){
   Duck.findByIdAndUpdate(req.params._id, req.body, (err, duck) => {
-          if (err) {
-              return res
-                  .status(500)
-                  .send({error: "unsuccessful"})
-          };
-          res.send({success: "success"});
+
       });
 
-
-    // var duck_id = req.params;
-    // console.log(req.body);
-    // Duck.update({_id: duck_id},(error, duck) {name: req.body.name, gender: req.body.gender, age: req.body.age, favpond: req.body.favpond},
-    //
-    //   function(err){
-    //
-    // })
-     res.redirect("/edit/:_id");
+     res.redirect("/");
     });
 
 app.post("/duck", function(req, res){
@@ -59,6 +47,11 @@ app.post("/duck", function(req, res){
         res.redirect("/");
     });
 });
+app.get("/delete/:_id", function(req, res){
+  Duck.findByIdAndRemove(req.params._id, (err, duck) => {
+      });
+  res.redirect("/");
+  })
 
 app.listen(port, function() {
     console.log(`listening on port ${port}`);
